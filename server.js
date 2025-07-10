@@ -1,9 +1,8 @@
- const express = require('express');
+const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
 const app = express();
 
-// ✅ Habilita CORS SOLO para tu dominio de Netlify
 app.use(cors({
   origin: 'https://adorable-pudding-3cfac7.netlify.app'
 }));
@@ -15,8 +14,11 @@ const BOLD_SECRET_KEY = 'nP7XOQSiT0QQF-4jMRztVw';
 app.post('/crear-checkout', async (req, res) => {
   const { valor } = req.body;
 
+  if (!valor || typeof valor !== 'string') {
+    return res.status(400).json({ error: 'Valor inválido o no enviado' });
+  }
+
   try {
-    // ✅ Limpia el valor: quita $ y comas
     const valorLimpio = valor.replace(/[^\d]/g, '');
 
     const response = await axios.post('https://api.bold.co/v1/checkouts', {
@@ -38,7 +40,6 @@ app.post('/crear-checkout', async (req, res) => {
   }
 });
 
-// ✅ Render usa el puerto de entorno o 3000 por defecto
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor Bold backend corriendo en http://localhost:${PORT}`);
