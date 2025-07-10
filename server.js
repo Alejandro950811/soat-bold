@@ -3,45 +3,32 @@ const axios = require('axios');
 const cors = require('cors');
 const app = express();
 
-// Acepta solicitudes desde el dominio de Netlify actual
+// CORS para tu Netlify
 app.use(cors({
   origin: 'https://earnest-gecko-f01971.netlify.app'
 }));
 
 app.use(express.json());
 
-const BOLD_SECRET_KEY = 'nP7XOQSiT0QQF-4jMRztVw';
-
-app.post('/crear-checkout', async (req, res) => {
-  const { valor } = req.body;
-
-  if (!valor || typeof valor !== 'string') {
-    return res.status(400).json({ error: 'Valor inválido o no enviado' });
-  }
-
+// Ruta para verificar conectividad externa
+app.get('/ping', async (req, res) => {
   try {
-    const valorLimpio = valor.replace(/[^\d]/g, '');
+    const google = await axios.get('https://www.google.com');
+    const jsonplaceholder = await axios.get('https://jsonplaceholder.typicode.com/posts/1');
+    const bold = await axios.get('https://api.bold.co');
 
-    const response = await axios.post('https://api.bold.co/v1/checkouts', {
-      amount: valorLimpio,
-      currency: 'COP',
-      success_url: 'https://earnest-gecko-f01971.netlify.app/gracias',
-      cancel_url: 'https://earnest-gecko-f01971.netlify.app/cancelado'
-    }, {
-      headers: {
-        Authorization: `Bearer ${BOLD_SECRET_KEY}`,
-        'Content-Type': 'application/json'
-      }
+    res.json({
+      google: google.status,
+      jsonplaceholder: jsonplaceholder.status,
+      bold: bold.status
     });
-
-    res.json({ url: response.data.checkout_url });
   } catch (error) {
-    console.error('Error al crear checkout:', error.response?.data || error.message);
-    res.status(500).json({ error: 'No se pudo crear el checkout' });
+    console.error('🔴 Error de conectividad externa:', error.message || error);
+    res.status(500).json({ error: 'Falló alguna llamada externa', details: error.message });
   }
 });
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor Bold backend corriendo en http://localhost:${PORT}`);
+  console.log(`Servidor de prueba corriendo en http://localhost:${PORT}`);
 });
