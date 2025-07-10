@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cotiza tu SOAT 2025</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="script.js"></script>
+</head>
+<body>
+
+  <!-- Barra navegación tipo SURA -->
+  <div class="nav-bar">
+    <div class="nav-container">
+      <a href="#">SEGUROS</a>
+      <a href="#">Inicio</a>
+      <a href="#">Seguro para personas</a>
+      <a href="#">Promociones</a>
+      <a href="#">Reclamaciones</a>
+    </div>
+  </div>
+
+  <!-- Logos superiores -->
+  <div class="logo-superior">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTpjg2KV2a-klbOP4cJmfWwGcbhpyHYu51CyQ&s" alt="Logo Sura" class="logo-img">
+    <img src="https://contenidos.pao.com.co/wp-content/uploads/2022/11/EscasezDeSOATColombia-08-1024x790.png" alt="Logo SOAT" class="logo-img">
+  </div>
+
+  <!-- Modal bienvenida -->
+  <div id="modalBienvenida" class="modal">
+    <div class="modal-content">
+      <h2>Antes de comprar tu SOAT, es importante que sepas:</h2>
+      <ul>
+        <li>Por este medio se expide el SOAT para los vehículos matriculados en Colombia.</li>
+        <li>Puedes pagar con Tarjeta de Crédito o Débito, PSE, Botón Bancolombia o Nequi.</li>
+        <li>Nuestra Pasarela de pagos aliada es <strong>BOLD S.A.S</strong>, tus pagos están protegidos ante cualquier fraude.</li>
+        <li>Si alguien te contacta por WhatsApp para pagar o realizar otro proceso, <strong>NO caigas en estafas</strong>.</li>
+        <li>Luego de que hayas comprado la póliza, espera 24 horas y verifica que esté cargada en el <a href="https://www.runt.com.co/consultaCiudadana/#/consultaVehiculo" target="_blank">RUNT</a>.</li>
+      </ul>
+      <button id="cerrarModal">Entendido</button>
+    </div>
+  </div>
+
+  <!-- Cotizador al lado del banner -->
+  <div class="wrapper">
+    <!-- Banner -->
+    <div class="imagen-cotizador">
+      <img src="https://images.prismic.io/suraenlinea-v2/ZvxL5rVsGrYSwQTA_Contenido_mobile.png?auto=format,compress" alt="Banner Sura">
+    </div>
+
+    <!-- Cotizador -->
+    <div class="cotizador">
+      <h1>Cotiza tu SOAT 2025</h1>
+
+      <label for="placa">Placa del vehículo:</label>
+      <input type="text" id="placa" placeholder="Ej: PPP000" maxlength="6" oninput="this.value = this.value.toUpperCase();" />
+
+      <label for="clase">Clase de vehículo:</label>
+      <select id="clase">
+        <option value="">Seleccione una clase</option>
+      </select>
+
+      <label for="subtipo">Subtipo:</label>
+      <select id="subtipo" disabled>
+        <option value="">Seleccione un subtipo</option>
+      </select>
+
+      <label for="edad" id="edad-label" style="display:none;">Antigüedad:</label>
+      <select id="edad" style="display:none;">
+        <option value="">Seleccione una antigüedad</option>
+        <option value="0 a 9 años">0 a 9 años</option>
+        <option value="10 años o mas">10 años o más</option>
+      </select>
+
+      <button onclick="cotizar()">Cotizar</button>
+      <div id="resultado"></div>
+    </div>
+  </div>
+
+  <!-- Modal resultado -->
+  <div id="modalResultado" class="modal">
+    <div class="modal-content">
+      <h2>Resultado de Cotización</h2>
+      <p id="detalleCotizacion"></p>
+      <!-- Botones actualizados -->
+      <button id="comprarBtn">Comprar</button>
+      <button id="cotizarOtraBtn">Cotizar otra placa</button>
+    </div>
+  </div>
+
+  <!-- Sección informativa estilo SURA -->
+  <section class="info-soat">
+    <h2>Con el SOAT SURA vamos más allá</h2>
+    <ul class="razones">
+      <li><img src="https://images.prismic.io/suraenlinea-v2/901b1532ac1ad92eecd0441378273da1deeffdd6_soat-icon-1-4-razones-para-comprarlo.png" alt="Envelope">
+          Lo compras directamente con SURA y lo recibes en tu correo electrónico.
+      </li>
+      <li><img src="https://images.prismic.io/suraenlinea-v2/fadd5363-435b-4fbd-be14-fd29b03e07f5_CampanaSEL.png" alt="Campana">
+          Puedes renovar tu SOAT con 20 días de anticipación.
+      </li>
+      <li><img src="https://images.prismic.io/suraenlinea-v2/60f9261f-5f0a-4ca5-b65f-ea4dc6618ada_AONSOAT_Ley_2161_Icono.png" alt="Porcentaje">
+          Puedes recibir beneficios por aplicar a rangos diferenciales por riesgo.
+      </li>
+      <li><img src="https://images.prismic.io/suraenlinea-v2/37c8a65bb243611581708d718e00654ec0a17fdb_soat-icon-3-app.png" alt="QR">
+          Lo puedes consultar en la App SURA incluso sin internet.
+      </li>
+      <li><img src="https://images.prismic.io/suraenlinea-v2/4c05fadb-c59c-4f00-9083-8f5ee2fb27bf_IconoSOATtienda.png" alt="Tienda">
+          Conoce nuestros puntos de venta y agenda tu cita.
+      </li>
+    </ul>
+
+    <h2>Beneficios del SOAT</h2>
+    <p>Este documento cubre las lesiones o fallecimiento de conductores, pasajeros o peatones.</p>
+
+    <div class="beneficios">
+      <div class="beneficio">
+        <img src="https://images.prismic.io/suraenlinea-v2/da7262ff93ad23ad4a8ae8428686862dd9d5f861_soat-gastos-de-atencion-medica.png" alt="Atención médica">
+        <div>
+          <strong>Gastos de atención médica</strong><br>
+          Hasta 701.68 UVT por accidente.
+        </div>
+      </div>
+      <div class="beneficio">
+        <img src="https://images.prismic.io/suraenlinea-v2/fc12cf2b0fc45c58d0a0b560fb8c2e10c2b418e6_soat-respaldo-por-fallecimiento.png" alt="Fallecimiento">
+        <div>
+          <strong>Respaldo por fallecimiento</strong><br>
+          Hasta 750 SMDLV a beneficiarios.
+        </div>
+      </div>
+      <div class="beneficio">
+        <img src="https://images.prismic.io/suraenlinea-v2/340013b0cd9ddbdc2eb745befadd9215b179c7aa_soat-gasto-por-incapacidad.png" alt="Incapacidad">
+        <div>
+          <strong>Incapacidad permanente</strong><br>
+          Hasta 180 SMDLV si quedas incapacitado.
+        </div>
+      </div>
+      <div class="beneficio">
+        <img src="https://images.prismic.io/suraenlinea-v2/7341c0b1df585a2a5a939ea85bb7bc448c943497_soat-gastos-de-transporte.png" alt="Transporte">
+        <div>
+          <strong>Gastos de transporte</strong><br>
+          Hasta 8.77 UVT al centro médico.
+        </div>
+      </div>
+    </div>
+
+    <p class="mt-3"><a href="https://www.segurossura.com.co/Documentos/condicionados/personas/vehiculos/soat.pdf" target="_blank">📄 Ver las condiciones de tu SOAT</a></p>
+  </section>
+
+</body>
+</html>
+
+
